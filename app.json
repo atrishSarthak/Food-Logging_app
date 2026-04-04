@@ -1,30 +1,54 @@
 {
   "expo": {
-    "name": "calibre-food",
+    "name": "Calibre Food",
     "slug": "calibre-food",
     "version": "1.0.0",
+    "scheme": "calibre-food",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "experiments": {
+      "typedRoutes": false
+    },
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0a0a0a"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Calibre needs camera access to scan your meals for nutrition tracking",
+        "NSPhotoLibraryUsageDescription": "Calibre needs photo library access to select meal photos"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0a0a0a"
       },
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE"],
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Calibre to access your camera to scan meals"
+        }
+      ],
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow Calibre to scan barcodes on packaged foods"
+        }
+      ]
+    ]
   }
 }

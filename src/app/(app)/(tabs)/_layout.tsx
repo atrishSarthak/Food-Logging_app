@@ -1,67 +1,30 @@
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
+import { ThemeProvider, DarkTheme } from '@react-navigation/native';
 
-export default function TabsLayout() {
+export default function TabLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: '#10b981',
-        tabBarInactiveTintColor: '#a3a3a3',
-        tabBarStyle: {
-          backgroundColor: '#0a0a0a',
-          borderTopColor: '#1a1a1a',
-        },
-        headerStyle: {
-          backgroundColor: '#0a0a0a',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '600',
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="diary"
-        options={{
-          title: 'Diary',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="book-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="scan"
-        options={{
-          title: 'Scan',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="camera-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="analytics"
-        options={{
-          title: 'Analytics',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="stats-chart-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" size={size} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+    <ThemeProvider value={DarkTheme}>
+      <NativeTabs>
+        <NativeTabs.Trigger name="diary">
+          <Icon sf={{ default: 'book', selected: 'book.fill' }} />
+          <Label>Diary</Label>
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger name="scan">
+          <Icon sf={{ default: 'camera', selected: 'camera.fill' }} />
+          <Label>Scan</Label>
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger name="analytics">
+          <Icon sf={{ default: 'chart.bar', selected: 'chart.bar.fill' }} />
+          <Label>Analytics</Label>
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger name="profile">
+          <Icon sf={{ default: 'person', selected: 'person.fill' }} />
+          <Label>Profile</Label>
+        </NativeTabs.Trigger>
+      </NativeTabs>
+    </ThemeProvider>
   );
 }

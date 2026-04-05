@@ -1,95 +1,108 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AnalyticsScreen() {
-  const [period, setPeriod] = useState<'week' | 'month'>('week');
-
-  // TODO: Implement Victory Native XL charts
-  // For now, showing placeholder
+  const [period, setPeriod] = useState<'7' | '30'>('7');
+  const [selectedTab, setSelectedTab] = useState<'kcal' | 'protein' | 'carbs' | 'fat'>('kcal');
 
   return (
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1">
+        {/* Header */}
+        <View className="px-6 pt-16 pb-6">
+          <Text className="text-white text-4xl font-bold">Analytics</Text>
+        </View>
+
         {/* Period Selector */}
-        <View className="flex-row p-4 gap-2">
+        <View className="flex-row px-6 gap-3 mb-6">
           <TouchableOpacity
-            onPress={() => setPeriod('week')}
-            className={`flex-1 py-3 rounded-lg ${
-              period === 'week' ? 'bg-primary' : 'bg-background-card'
+            onPress={() => setPeriod('7')}
+            className={`flex-1 py-4 rounded-2xl ${
+              period === '7' ? 'bg-[#ff6b35]' : 'bg-[#1a1a1a]'
             }`}
           >
             <Text className={`text-center font-semibold ${
-              period === 'week' ? 'text-white' : 'text-text-secondary'
+              period === '7' ? 'text-white' : 'text-text-secondary'
             }`}>
-              Week
+              7 Days
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => setPeriod('month')}
-            className={`flex-1 py-3 rounded-lg ${
-              period === 'month' ? 'bg-primary' : 'bg-background-card'
+            onPress={() => setPeriod('30')}
+            className={`flex-1 py-4 rounded-2xl ${
+              period === '30' ? 'bg-[#ff6b35]' : 'bg-[#1a1a1a]'
             }`}
           >
             <Text className={`text-center font-semibold ${
-              period === 'month' ? 'text-white' : 'text-text-secondary'
+              period === '30' ? 'text-white' : 'text-text-secondary'
             }`}>
-              Month
+              30 Days
             </Text>
           </TouchableOpacity>
+        </View>
+
+        {/* Tab Selector */}
+        <View className="flex-row px-6 mb-6">
+          {(['kcal', 'protein', 'carbs', 'fat'] as const).map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              onPress={() => setSelectedTab(tab)}
+              className="flex-1 pb-3"
+              style={{
+                borderBottomWidth: selectedTab === tab ? 2 : 0,
+                borderBottomColor: '#ff6b35',
+              }}
+            >
+              <Text className={`text-center capitalize ${
+                selectedTab === tab ? 'text-white' : 'text-text-secondary'
+              }`}>
+                {tab === 'kcal' ? 'kcal' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
 
         {/* Chart Placeholder */}
-        <View className="bg-background-card mx-4 rounded-lg p-6 h-64 items-center justify-center">
+        <View className="mx-6 mb-6 bg-[#1a1a1a] rounded-3xl p-6 h-64 items-center justify-center">
           <Text className="text-text-secondary text-center">
-            Daily Calories Chart
+            Chart will be displayed here
           </Text>
           <Text className="text-text-secondary text-sm text-center mt-2">
-            Victory Native XL chart will be implemented here
+            {period} days • {selectedTab}
           </Text>
         </View>
 
-        {/* Stats */}
-        <View className="p-4">
-          <Text className="text-white font-semibold text-lg mb-4">
-            {period === 'week' ? 'This Week' : 'This Month'}
-          </Text>
-          
-          <View className="bg-background-card rounded-lg p-4 mb-3">
-            <Text className="text-text-secondary text-sm">Average Calories</Text>
-            <Text className="text-white font-bold text-2xl mt-1">1,847</Text>
+        {/* Stats Cards */}
+        <View className="flex-row px-6 gap-3 mb-6">
+          <View className="flex-1 bg-[#1a1a1a] rounded-2xl p-4">
+            <View className="w-2 h-2 rounded-full bg-[#ff6b35] mb-2" />
+            <Text className="text-white text-3xl font-bold">0</Text>
+            <Text className="text-text-secondary text-sm mt-1">kcal</Text>
+            <Text className="text-text-secondary text-xs mt-1">AVG / DAY</Text>
           </View>
 
-          <View className="bg-background-card rounded-lg p-4 mb-3">
-            <Text className="text-text-secondary text-sm">Average Protein</Text>
-            <Text className="text-white font-bold text-2xl mt-1">142g</Text>
+          <View className="flex-1 bg-[#1a1a1a] rounded-2xl p-4">
+            <View className="w-2 h-2 rounded-full bg-[#ef4444] mb-2" />
+            <Text className="text-white text-3xl font-bold">0</Text>
+            <Text className="text-text-secondary text-sm mt-1">g</Text>
+            <Text className="text-text-secondary text-xs mt-1">AVG PROTEIN</Text>
           </View>
 
-          <View className="bg-background-card rounded-lg p-4 mb-3">
-            <Text className="text-text-secondary text-sm">Days Logged</Text>
-            <Text className="text-white font-bold text-2xl mt-1">
-              {period === 'week' ? '5 / 7' : '23 / 30'}
-            </Text>
-          </View>
-
-          <View className="bg-background-card rounded-lg p-4">
-            <Text className="text-text-secondary text-sm">Streak</Text>
-            <Text className="text-white font-bold text-2xl mt-1">3 days</Text>
+          <View className="flex-1 bg-[#1a1a1a] rounded-2xl p-4">
+            <View className="w-2 h-2 rounded-full bg-[#10b981] mb-2" />
+            <Text className="text-white text-3xl font-bold">0</Text>
+            <Text className="text-text-secondary text-sm mt-1">MEALS LOGGED</Text>
           </View>
         </View>
 
-        {/* Macro Split Placeholder */}
-        <View className="p-4">
-          <Text className="text-white font-semibold text-lg mb-4">
-            Macro Split
+        {/* No Data Message */}
+        <View className="items-center py-16 px-6">
+          <Ionicons name="bar-chart-outline" size={64} color="#374151" />
+          <Text className="text-white text-xl font-semibold mt-4">No data yet</Text>
+          <Text className="text-text-secondary text-center mt-2">
+            Log meals to see your nutrition trends here
           </Text>
-          <View className="bg-background-card rounded-lg p-6 h-48 items-center justify-center">
-            <Text className="text-text-secondary text-center">
-              Macro Donut Chart
-            </Text>
-            <Text className="text-text-secondary text-sm text-center mt-2">
-              Victory Native XL chart will be implemented here
-            </Text>
-          </View>
         </View>
       </ScrollView>
     </View>
